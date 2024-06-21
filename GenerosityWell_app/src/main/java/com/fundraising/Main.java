@@ -1,18 +1,63 @@
-package com.fundraising;
+package com.fundraising.service;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import com.fundraising.FundraisingEvent;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        // Press Opt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
+        FundraisingService service = new FundraisingService();
+        Scanner scanner = new Scanner(System.in);
 
-        // Press Ctrl+R or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+        while (true) {
+            System.out.println("1. Create Event");
+            System.out.println("2. View Event");
+            System.out.println("3. Update Event");
+            System.out.println("4. Delete Event");
+            System.out.println("5. Exit");
+            System.out.print("Choose an option: ");
+            int option = scanner.nextInt();
+            scanner.nextLine();  // Consume newline
 
-            // Press Ctrl+D to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Cmd+F8.
-            System.out.println("Some message");
+            switch (option) {
+                case 1:
+                    System.out.print("Enter event ID: ");
+                    String id = scanner.nextLine();
+                    System.out.print("Enter event name: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter event goal: ");
+                    double goal = scanner.nextDouble();
+                    service.createEvent(id, name, goal);
+                    break;
+                case 2:
+                    System.out.print("Enter event ID: ");
+                    id = scanner.nextLine();
+                    FundraisingEvent event = service.getEvent(id);
+                    if (event != null) {
+                        System.out.println(event);
+                    } else {
+                        System.out.println("Event not found.");
+                    }
+                    break;
+                case 3:
+                    System.out.print("Enter event ID: ");
+                    id = scanner.nextLine();
+                    System.out.print("Enter new event name: ");
+                    name = scanner.nextLine();
+                    System.out.print("Enter new event goal: ");
+                    goal = scanner.nextDouble();
+                    service.updateEvent(id, name, goal);
+                    break;
+                case 4:
+                    System.out.print("Enter event ID: ");
+                    id = scanner.nextLine();
+                    service.deleteEvent(id);
+                    break;
+                case 5:
+                    System.out.println("Exiting...");
+                    return;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
         }
     }
 }
